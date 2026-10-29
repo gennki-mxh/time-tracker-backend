@@ -1,9 +1,7 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
 import pymysql
 
 app = Flask(__name__)
-CORS(app) # 相当于给所有网页发一张通行证
 
 # 1. 写一个 POST 接口，用来接收数据并存入数据库
 @app.route('/api/time', methods=['POST'])
