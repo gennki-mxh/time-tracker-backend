@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import pymysql
 
 app = Flask(__name__)
+CORS(app) # 相当于给所有网页发一张通行证
 
 # 1. 写一个 POST 接口，用来接收数据并存入数据库
 @app.route('/api/time', methods=['POST'])
@@ -35,6 +37,37 @@ def add_time_record():
 
     except Exception as e:
         return jsonify({"status": "error", "msg": f"数据库报错了: {str(e)}"})
+
+# 2. 新增 GET 接口：获取所有时间记录
+@app.route('/api/time', methods=['GET'])
+def get_all_time_records():
+    try:
+        connection = pymysql.connect(
+            host='127.0.0.1',
+            user='root',
+            password='admin',  # <--- 修改这里！！！
+            database='test_db'
+        )
+        
+        # 这里要用 DictCursor，这样查询出来的每行数据都是一个字典（带字段名），方便转 JSON
+        cursor = connection.cursor(pymysql.cursors.DictCursor) 
+        
+        sql = "SELECT * FROM time_records ORDER BY id DESC" # 按 id 倒序，最新存的排前面
+        cursor.execute(sql)
+        
+        # 获取所有结果
+        results = cursor.fetchall()
+        connection.close()
+
+        # 将字典列表直接返回，jsonify 会自动把它变成标准的 JSON 格式
+        return jsonify({
+            "status": "success",
+            "total": len(results),
+            "data": results
+        })
+
+    except Exception as e:
+        return jsonify({"status": "error", "msg": f"查询报错: {str(e)}"})
 
 if __name__ == '__main__':
     app.run(debug=True)
