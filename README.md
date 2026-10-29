@@ -24,6 +24,8 @@
 
 - [✔] 增加 GET /api/time 接口
 
+- [✔] 增加 `flask-cors` 跨域配置
+
 ## 📂 项目结构
 
 ```text
