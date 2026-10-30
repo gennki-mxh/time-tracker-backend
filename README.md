@@ -16,15 +16,17 @@
 
 ## ✨ 已实现功能
 
-- [✔] 基础 Web 服务搭建与路由分发
+- 基础 Web 服务搭建与路由分发
 
-- [✔] 接收前端 POST 请求，解析 JSON 数据
+- 接收前端 POST 请求，解析 JSON 数据
 
-- [✔] 连接 MySQL 数据库，实现数据的持久化存储（Insert 操作）
+- 连接 MySQL 数据库，实现数据的持久化存储（Insert 操作）
 
-- [✔] 增加 GET /api/time 接口
+- 增加 GET /api/time 接口
 
-- [✔] 增加 `flask-cors` 跨域配置
+- 增加 `flask-cors` 跨域配置
+
+- 新增 增加 POST 数据校验拦截，DELETE 删除接口
 
 ## 📂 项目结构
 
@@ -128,9 +130,9 @@ python app_time.py
 
 ## 🗺️ 后续开发计划 (Roadmap)
 
-- 增加 `GET /api/time` 接口，实现历史数据查询与分页
-- 引入数据校验机制，防止非法字符或负数入库
-- 增加 `flask-cors` 跨域配置
+- [✔] 增加 `GET /api/time` 接口，实现历史数据查询与分页
+- [✔] 引入数据校验机制，防止非法字符或负数入库
+- [✔] 增加 `flask-cors` 跨域配置
 - 接入前端页面（HTML/CSS/JS），实现可视化数据看板
 - 使用 Gunicorn + Nginx 部署到 Linux 服务器
 
