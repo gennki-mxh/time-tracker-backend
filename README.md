@@ -28,6 +28,8 @@
 
 - 新增 增加 POST 数据校验拦截，DELETE 删除接口
 
+- 增加 PUT 接口，完成 CRUD 完整闭环与参数校验
+
 ## 📂 项目结构
 
 ```text
@@ -90,7 +92,7 @@ CREATE TABLE time_records (
 python app_time.py
 ```
 
-如果终端出现 `* Running on http://127.0.0.1:5000`，说明服务启动成功。
+如果终端出现 `- Running on http://127.0.0.1:5000`，说明服务启动成功。
 
 ## 📡 API 接口文档
 
@@ -127,6 +129,12 @@ python app_time.py
     "msg": "时间数据已成功存入数据库！"
 }
 ```
+
+### 更新指定记录
+
+- **接口地址**：`/api/time/<int:record_id>`
+- **请求方法**：`PUT`
+- **请求参数**：JSON Body (sleep, study, fun, sport)
 
 ## 🗺️ 后续开发计划 (Roadmap)
 
