@@ -100,5 +100,43 @@ def delete_time_record(record_id):
     except Exception as e:
         return jsonify({"status": "error", "msg": f"删除报错: {str(e)}"})
 
+# 新增 PUT 接口：根据 id 更新数据
+@app.route('/api/time/<int:record_id>', methods=['PUT'])
+def update_time_record(record_id):
+    # 1. 接收前端发来的新数据
+    data = request.json
+    sleep_h = data.get('sleep', 0)
+    study_h = data.get('study', 0)
+    fun_h = data.get('fun', 0)
+    sport_h = data.get('sport', 0)
+
+    try:
+        connection = pymysql.connect(
+            host='127.0.0.1',
+            user='root',
+            password='admin',  # <--- 修改这里！！！
+            database='test_db'
+        )
+        cursor = connection.cursor()
+
+        # 2. 执行更新语句（注意 WHERE 条件绝对不能漏）
+        sql = """
+            UPDATE time_records 
+            SET sleep_hours = %s, study_hours = %s, fun_hours = %s, sport_hours = %s 
+            WHERE id = %s
+        """
+        cursor.execute(sql, (sleep_h, study_h, fun_h, sport_h, record_id))
+        connection.commit()
+
+        # 3. 判断是否真的找到了这条数据并修改
+        if cursor.rowcount == 0:
+            return jsonify({"status": "error", "msg": f"找不到 id 为 {record_id} 的记录，更新失败"}), 404
+
+        connection.close()
+        return jsonify({"status": "success", "msg": f"成功更新 id 为 {record_id} 的记录！"})
+
+    except Exception as e:
+        return jsonify({"status": "error", "msg": f"更新报错: {str(e)}"})
+    
 if __name__ == '__main__':
     app.run(debug=True)
